@@ -1,0 +1,150 @@
+.hero {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 0px 0px;
+    padding-top: 10px;
+  }
+  
+  .hero-circles {
+    width: auto;
+    position: relative;
+    top: 0%;
+    z-index: 1;
+    height: 100%;
+  }
+  
+  .hero-circle {
+    position: relative;
+    border-radius: 50%;
+    background-color: #2B2B2B;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    flex-direction: column;
+  }
+  
+.container-left {
+    display: flex;
+    width: 50%;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px;
+    height: 500px;
+  }
+
+.container-right {
+    display: flex;
+    width: 50%;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px;
+    height: 500px;
+  }
+
+.hero-text {
+    width: 100%;
+    text-align: left;
+    position: relative;
+    top: -10%;
+  }
+
+.hero-text p {
+    font-size: 2.1rem;
+    font-weight: 400;
+    color: #2B2B2B;
+    margin: 0;
+}
+
+.hero-text h2 {
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: #2B2B2B;
+    margin: 0;
+}
+
+.circle-number {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #f3f3f3;
+    width: 100%;
+    text-align: center;
+  }
+
+.circle-name {
+    font-size: 2.5rem;
+    font-weight: 500;
+    color: #f3f3f3;
+    width: 100%;
+    text-align: center;
+  }
+
+.c1 {
+    position: relative;
+    top: 0%;
+    left: 51%;
+    width: 270px;
+    height: 270px;
+  }
+
+.c1_number {
+  font-size: 2.9rem;
+}
+
+.c1_name {
+  font-size: 1.9rem;
+}
+
+.c2 {
+  position: relative;
+    top: -29%;
+    left: -28%;
+    width: 220px;
+    height: 220px;
+}
+
+.c2_number {
+  font-size: 2.7rem;
+}
+
+.c2_name {
+  font-size: 1.7rem;
+}
+
+.c3 {
+  position: relative;
+    top: -43%;
+    left: 43%;
+    width: 170px;
+    height: 170px;
+}
+
+.c3_number {
+  font-size: 2.3rem;
+}
+
+.c3_name {
+  font-size: 1.3rem;
+}
+
+  @media (max-width: 768px) {
+    .hero {
+      flex-direction: column;
+      text-align: center;
+    }
+  
+    .text {
+      max-width: 100%;
+      text-align: center;
+    }
+  
+    .hero-circles {
+      flex-direction: row;
+      justify-content: center;
+    }
+  }
+  

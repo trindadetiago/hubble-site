@@ -1,0 +1,41 @@
+.background-circles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -10;
+    overflow: hidden;
+  }
+  
+  .circle {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.6;
+    filter: blur(50px);
+    z-index: -10;
+  }
+
+.circle1 {
+  top: 10%;
+  left: -25%;
+  width: 950px;
+  height: 850px;
+  background-color: #c3e6ff;
+}
+
+.circle2 {
+  top: 50%;
+  left: 20%;
+  width: 750px;
+  height: 650px;
+  background-color: #c8ffe8;
+}
+
+.circle3 {
+  top: 0%;
+  left: 60%;
+  width: 950px;
+  height: 850px;
+  background-color: #cbffc3;
+}

@@ -1,0 +1,39 @@
+/* Navbar.css */
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    padding-left: 15%;
+    padding-right: 15%;
+    z-index: 1000;
+  }
+  
+  .logo-container {
+    display: flex;
+    align-items: center;
+  }
+  
+  .logo {
+    height: 50px;
+  }
+  
+  .logo-title {
+    margin-left: 10px;
+  }
+  
+  .link-container {
+    display: flex;
+    align-items: center;
+  }
+  
+  .link {
+    margin-right: 35px;
+    text-decoration: none;
+    color: black;
+  }
+  
+  .link:last-child {
+    margin-right: 0;
+  }
+  
