@@ -8,15 +8,19 @@ import trashIcon from '../../../assets/images/icons/trash-icon.svg';
 interface IndividualInstanceProps {
     title: string;
     subtitle: string;
+    onEdit?: () => void;
+    onDelete?: () => void;
 }
 
-const IndividualInstance: React.FC<IndividualInstanceProps> = ({ title, subtitle }) => {
+const IndividualInstance: React.FC<IndividualInstanceProps> = ({ title, subtitle, onEdit, onDelete }) => {
     const handleEdit = () => {
         console.log('Edit');
+        onEdit && onEdit();
     };
 
     const handleDelete = () => {
         console.log('Delete');
+        onDelete && onDelete();
     };
   
     return (
@@ -27,10 +31,10 @@ const IndividualInstance: React.FC<IndividualInstanceProps> = ({ title, subtitle
         </div>
         <div className='ii-right-container'>
             <div className='ii-images-container'>
-                <button className='ii-button' onClick={handleEdit}>
+                <button className='ii-button' onClick={() => handleEdit()}>
                     <img src={editIcon} alt='Edit Icon' className='ii-image' />
                 </button>
-                <button className='ii-button' onClick={handleDelete}>
+                <button className='ii-button' onClick={() => handleDelete()}>
                     <img src={trashIcon} alt='Trash Icon' className='ii-image' />
                 </button>
             </div>

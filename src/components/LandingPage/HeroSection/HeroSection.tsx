@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './HeroSection.css';  
 
 const HeroSection: React.FC = () => {
@@ -13,18 +14,18 @@ const HeroSection: React.FC = () => {
       </div>
       <div className="container-right">
         <div className="hero-circles">
-          <div className="hero-circle c1">
+          <Link to="/laboratorios" className="hero-circle c1">
             <div className="circle-number c1_number">7</div>
             <div className="circle-name c1_name">Laboratórios</div>
-          </div>
-          <div className="hero-circle c2">
+          </Link>
+          <Link to="/laboratorios" className="hero-circle c2">
             <div className="circle-number c2_number">13</div>
             <div className="circle-name c2_name">Projetos</div>
-          </div>
-          <div className="hero-circle c3">
+          </Link>
+          <Link to="/laboratorios" className="hero-circle c3">
             <div className="circle-number c3_number">34</div>
             <div className="circle-name c3_name">Membros</div>
-          </div>
+          </Link>
         </div>
       </div>
     </section>

@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import LandingPage from './pages/LandingPage';
-import Laboratorios from './pages/Laboratorios';
+import Laboratorios from './pages/Laboratorios/Laboratorios';
 import Projetos from './pages/Projetos';
 import Pessoas from './pages/Pessoas';
 import Vinculos from './pages/Vinculos';
