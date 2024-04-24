@@ -1,6 +1,6 @@
 import { url } from "./api";
 
-const api_url = url + "/laboratorio";
+const api_url = url + "/tipoprojeto";
 
 // ROUTES:
 // /laboratorio
@@ -10,18 +10,19 @@ const api_url = url + "/laboratorio";
 // /curso
 // /tipo_projeto
 
-export const fetchLabs = async () => {
+export const fetchTipoProjetos = async () => {
     try {
       const response = await fetch(api_url);
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
       const data = await response.json();
-      // data = {'laboratorios': [[id, name], [id, name], ...]}
-      const transformedData = data.laboratorios.map((lab: [number, string]) => {
+      // data = {'tipoprojetos': [[id, tipro_nome], [id, tipro_nome]...]}
+      console.log(data)
+      const transformedData = data.tipoprojetos.map((tipo_projeto: [number, string]) => {
         return {
-          id: lab[0],
-          name: lab[1]
+          id: tipo_projeto[0],
+          tipro_nome: tipo_projeto[1]
         };
       });
       return transformedData;
@@ -30,23 +31,8 @@ export const fetchLabs = async () => {
       throw error;
     }
 }
-  
-export const fetchLabById = async (id: number) => {
-    try {
-      const response = await fetch(`${api_url}/${id}`);
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      const data = await response.json();
-      return data.data;
-    } catch (error) {
-      console.error('There was a problem with the fetch operation:', error);
-      throw error;
-    }
-}
 
-
-export const deleteLab = async (id: string): Promise<void> => {
+export const deleteTipoProjeto = async (id: string): Promise<void> => {
     try {
       const response = await fetch(`${api_url}/${id}`, {
         method: 'DELETE'
@@ -55,44 +41,44 @@ export const deleteLab = async (id: string): Promise<void> => {
         throw new Error('Network response was not ok');
       }
     } catch (error) {
-      console.error('Failed to delete user:', error);
+      console.error('Failed to delete projeto:', error);
       throw error;
     }
 }
   
-
-export const editLab = async (id: string, labData: { name: string }): Promise<void> => {
+export const editTipoProjeto = async (id: string, tipoProjetoData: { tipro_nome: string }): Promise<void> => {
     try {
-      console.log("NOVO NOME: ", labData.name)
       const response = await fetch(`${api_url}/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({lab_nome: labData.name})
+        body: JSON.stringify(tipoProjetoData)
       });
       console.log("RESPONSE: ", response)
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
     } catch (error) {
-      console.error('Failed to edit lab:', error);
+      console.error('Failed to edit projeto:', error);
       throw error;
     }
 }
 
-export const createLab = async (labData: { name: string }): Promise<void> => { 
+export const createTipoProjeto = async ( tipoProjetoData: { tipro_nome: string } ): Promise<void> => { 
   try { 
     const response = await fetch(api_url, { 
       method: 'POST', headers: { 
         'Content-Type': 'application/json' 
       }, 
-      body: JSON.stringify({ lab_nome: labData.name }) 
+      body: JSON.stringify(tipoProjetoData) 
     }); 
       if (!response.ok) { 
+        console.log(response);
+        console.log(tipoProjetoData);
         throw new Error('Network response was not ok'); 
       } 
     } catch (error) { 
-      console.error('Failed to create lab:', error); throw error; 
+      console.error('Failed to create projeto:', error); throw error; 
     } 
   }

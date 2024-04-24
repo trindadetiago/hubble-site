@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import './Modal.css';
 
+import Dropdown from './Dropdown';
+
+import { fetchTipoProjetos } from '../../../api/api_tipo_projetos';
+import { fetchLabs } from '../../../api/api_laboratorio';
+
 interface EditModalProps {
     data: any;
     isOpen: boolean;
@@ -9,7 +14,7 @@ interface EditModalProps {
 }
 
 interface Field {
-    data_type: 'string' | 'integer';
+    data_type: 'string' | 'integer' | 'id_tipro_projeto' | 'id_lab_projeto';
     value: string | number;
 }
 
@@ -17,7 +22,12 @@ interface Fields {
     [key: string]: Field;
 }
 
+
+
 const EditModal: React.FC<EditModalProps> = ({ data, isOpen, onClose, onConfirm }) => {
+    const [selectedTipoProjeto, setSelectedTipoProjeto] = useState('');
+    const [selectedLaboratorio, setSelectedLaboratorio] = useState('');
+    
     const [fields, setFields] = useState<Fields>({});
 
     useEffect(() => {
@@ -32,9 +42,44 @@ const EditModal: React.FC<EditModalProps> = ({ data, isOpen, onClose, onConfirm 
     };
 
     const handleConfirm = () => {
+        if (fields.hasOwnProperty('id_tipro_projeto')) {
+            fields['id_tipro_projeto'].value = selectedTipoProjeto;
+        }
+        if (fields.hasOwnProperty('id_lab_projeto')) {
+            fields['id_lab_projeto'].value = selectedLaboratorio;
+        }
         const updatedFields = JSON.stringify(fields);
+        console.log("SENDING", updatedFields)
         onConfirm(updatedFields);
     }
+
+    const [tipoProjetosData, setTipoProjetosData] = useState([]); // [ { id: 1, name: "Tipo 1" }, { id: 2, name: "Tipo 2" }, ... ]
+    const fecthDataTipoProjetos = async () => {
+        try {
+            const data = await fetchTipoProjetos();
+            console.log(data);
+            setTipoProjetosData(data);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    }
+    const [laboratoriosData, setLaboratoriosData] = useState([]); // [ { id: 1, name: "Laboratorio 1" }, { id: 2, name: "Laboratorio 2" }, ... ]
+    const fecthDataLaboratorios = async () => {
+        try {
+            const data = await fetchLabs();
+            console.log(data);
+            setLaboratoriosData(data);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    }
+
+    useEffect(() => {
+        if (isOpen) {
+            fecthDataTipoProjetos();
+            fecthDataLaboratorios();
+        }
+    }, [isOpen]);
 
     if (!isOpen) return null;
 
@@ -43,7 +88,36 @@ const EditModal: React.FC<EditModalProps> = ({ data, isOpen, onClose, onConfirm 
             <div className="modal-content">
                 <div className="modal-header">Editar</div>
                 {Object.keys(fields).map((key) => {
-                    // Only render input fields for keys other than "Id"
+                    if (fields[key].data_type === "id_tipro_projeto") {
+                        return (
+                            <div key={key} className="input-field">
+                                <label className="label">{key}</label>
+                                <Dropdown 
+                                    key = {key}
+                                    data={tipoProjetosData} 
+                                    idKey="id" 
+                                    displayKey="tipro_nome" 
+                                    onSelectionChange={setSelectedTipoProjeto} 
+                                    defaultValue={fields[key].value}
+                                />
+                            </div>
+                        );
+                    }
+                    if (fields[key].data_type === "id_lab_projeto") {
+                        return (
+                            <div key={key} className="input-field">
+                                <label className="label">{key}</label>
+                                <Dropdown 
+                                    key = {key}
+                                    data={laboratoriosData} 
+                                    idKey="id" 
+                                    displayKey="name" 
+                                    onSelectionChange={setSelectedLaboratorio} 
+                                    defaultValue={fields[key].value}
+                                />
+                            </div>
+                        );
+                    }
                     if (key !== "Id") {
                         return (
                             <div key={key} className="input-field">

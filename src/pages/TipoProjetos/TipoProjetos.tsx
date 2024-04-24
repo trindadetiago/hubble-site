@@ -5,25 +5,27 @@ import EditModal from '../../components/shared/Modal/EditModal';
 import DeleteModal from '../../components/shared/Modal/DeleteModal';
 import CreateModal from '../../components/shared/Modal/CreateModal';
 
-import { fetchLabs, editLab, deleteLab, createLab } from '../../api/api_laboratorio';
+import { fetchTipoProjetos, editTipoProjeto, createTipoProjeto, deleteTipoProjeto } from '../../api/api_tipo_projetos';
 
-import './Laboratorios.css'; 
+import './TipoProjetos.css'; 
 
-const Laboratorios: React.FC = () => {
-    const editInstanceClick = (labId: string, labNome: string) => {
-        setDataPlaceholders(
-            { Id: { data_type: "string", value: labId, readOnly: true},
-            Nome: { data_type: "string", value: labNome, readOnly: false } 
-        });
+const TipoProjetos: React.FC = () => {
+    const editInstanceClick = (Id: string, tipro_nome: string) => {
+        setDataPlaceholders({ 
+            Id: { data_type: "string", value: Id, readOnly: true},
+            tipro_nome: { data_type: "string", value: tipro_nome, readOnly: false },
+            });
         setEditModalOpen(true);
     };
 
     const editInstanceConfirm = async (dataa: string) => {
         console.log(dataa)
-        const jsonData = JSON.parse(dataa);
+        let jsonData = JSON.parse(dataa);
+        const id = jsonData.Id.value;
+        jsonData = {tipro_nome: jsonData.tipro_nome.value}
         console.log(jsonData)
         try {
-            await editLab(jsonData.Id.value, { name: jsonData.Nome.value });
+            await editTipoProjeto(id, jsonData);
             console.log("Sucesso")
             await fetchData();
         } catch (error) {
@@ -38,10 +40,11 @@ const Laboratorios: React.FC = () => {
 
     const createInstanceConfirm = async (dataa: string) => {
         console.log(dataa)
-        const jsonData = JSON.parse(dataa);
+        let jsonData = JSON.parse(dataa);
+        jsonData = {tipro_nome: jsonData.tipro_nome.value}
         console.log(jsonData)
         try {
-            await createLab({ name: jsonData.Nome.value });
+            await createTipoProjeto(jsonData);
             console.log("Sucesso")
             await fetchData();
         } catch (error) {
@@ -59,7 +62,7 @@ const Laboratorios: React.FC = () => {
     const deleteInstanceConfirm = async () => {
         console.log("Deletando", deleteDataId)
         try {
-            await deleteLab(deleteDataId);
+            await deleteTipoProjeto(deleteDataId);
             await fetchData();
         } catch (error) {
             console.error('Error deleting lab:', error);
@@ -67,12 +70,12 @@ const Laboratorios: React.FC = () => {
         setDeleteModalOpen(false);
     }
 
-    const [labData, setLabData] = useState([]);
+    const [tipoProjData, setTipoProjData] = useState([]);
 
     const fetchData = async () => {
         try {
-            const data = await fetchLabs();
-            setLabData(data);
+            const data = await fetchTipoProjetos();
+            setTipoProjData(data);
         } catch (error) {
             console.error('Error fetching labs:', error);
         }
@@ -88,35 +91,23 @@ const Laboratorios: React.FC = () => {
 
     const [dataPlaceholders, setDataPlaceholders] = useState({
         Id: { data_type: "string", value: "", readOnly: true },
-        Nome: { data_type: "string", value: "", readOnly: false},
+        tipro_nome: { data_type: "string", value: "", readOnly: false },
     });
 
     return (
         <div style={{ paddingLeft: '15%', paddingRight: '15%'}}>
             <h1 
             style={{ marginTop: '100px', marginBottom: '40px' }}>
-            Laboratórios
+            Tipos de Projetos
             </h1>
-            {/* <IndividualInstance 
-            title="TRIL"
-            subtitle="Technology, Research and Innovation Lab"
-            onEdit={() => editInstanceClick('0', "TRIL")}
-            onDelete={() => deleteInstanceClick('0')}
-            />
-            <IndividualInstance 
-            title="Laboratório de Computação Científica e Visualização"
-            subtitle="Universidade Federal de Alagoas"
-            onEdit={() => editInstanceClick('0', "LCCV")}
-            onDelete={() => deleteInstanceClick('0')}
-            /> */}
 
-            {labData.map((lab: any) => (
+            {tipoProjData.map((tipoProj: any) => (
                 <IndividualInstance
-                    key={lab.id}
-                    title={lab.name}
-                    subtitle={"ID do Laboratório: " + lab.id}
-                    onEdit={() => editInstanceClick(lab.id, lab.name)}
-                    onDelete={() => deleteInstanceClick(lab.id)}
+                    key={tipoProj.id}
+                    title={tipoProj.tipro_nome}
+                    subtitle={""}
+                    onEdit={() => editInstanceClick(tipoProj.id, tipoProj.tipro_nome)}
+                    onDelete={() => deleteInstanceClick(tipoProj.id)}
                 />
             ))}
 
@@ -146,4 +137,4 @@ const Laboratorios: React.FC = () => {
     );
 };
 
-export default Laboratorios;
+export default TipoProjetos;

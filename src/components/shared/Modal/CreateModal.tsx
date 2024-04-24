@@ -5,6 +5,7 @@ interface CreateModalProps {
     data: any;
     isOpen: boolean;
     onClose: () => void;
+    onConfirm: (data: string) => void;
 }
 
 interface Field {
@@ -16,7 +17,7 @@ interface Fields {
     [key: string]: Field;
 }
 
-const CreateModal: React.FC<CreateModalProps> = ({ data, isOpen, onClose }) => {
+const CreateModal: React.FC<CreateModalProps> = ({ data, isOpen, onClose, onConfirm }) => {
     const [fields, setFields] = useState<Fields>({});
 
     useEffect(() => {
@@ -31,8 +32,8 @@ const CreateModal: React.FC<CreateModalProps> = ({ data, isOpen, onClose }) => {
     };
 
     const handleConfirm = () => {
-        console.log('Confirm');
-        onClose();
+        const updatedFields = JSON.stringify(fields);
+        onConfirm(updatedFields);
     }
 
     if (!isOpen) return null;
@@ -41,17 +42,23 @@ const CreateModal: React.FC<CreateModalProps> = ({ data, isOpen, onClose }) => {
         <div className="modal-overlay">
         <div className="modal-content">
             <div className="modal-header">Criar</div>
-            {Object.keys(fields).map((key) => (
-            <div key={key} className="input-field">
-                <label className="label">{key}</label>
-                <input
-                type={fields[key].data_type === 'integer' ? 'number' : 'text'}
-                className="input"
-                value={fields[key].value}
-                onChange={(e) => handleChange(key, e.target.value)}
-                />
-            </div>
-            ))}
+            {Object.keys(fields).map((key) => {
+                    // Only render input fields for keys other than "Id"
+                    if (key !== "Id") {
+                        return (
+                            <div key={key} className="input-field">
+                                <label className="label">{key}</label>
+                                <input
+                                    type={fields[key].data_type === 'integer' ? 'number' : 'text'}
+                                    className="input"
+                                    value={fields[key].value}
+                                    onChange={(e) => handleChange(key, e.target.value)}
+                                />
+                            </div>
+                        );
+                    }
+                    return null; // Return null for "Id", so nothing is rendered
+            })}
             <div className="modal-button-container">
                 <button className="modal-button modal-close-button" onClick={onClose}>Cancelar</button>
                 <button className="modal-button modal-confirm-edit-button" onClick={handleConfirm}>Criar</button>
