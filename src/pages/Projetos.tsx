@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 
-import IndividualInstance from '../../components/shared/IndividualInstance/IndividualInstance';
-import EditModal from '../../components/shared/Modal/EditModal';
-import DeleteModal from '../../components/shared/Modal/DeleteModal';
-import CreateModal from '../../components/shared/Modal/CreateModal';
+import IndividualInstance from '../components/shared/IndividualInstance/IndividualInstance';
+import EditModal from '../components/shared/Modal/EditModal';
+import DeleteModal from '../components/shared/Modal/DeleteModal';
+import CreateModal from '../components/shared/Modal/CreateModal';
 
-import { fetchProjetos, editProjeto, deleteProjeto, createProjeto } from '../../api/api_projetos';
-import { fetchTipoProjetos } from '../../api/api_tipo_projetos';
-import { fetchLabs } from '../../api/api_laboratorio';
+import { fetchProjetos, editProjeto, deleteProjeto, createProjeto } from '../api/api_projetos';
+import { fetchTipoProjetos } from '../api/api_tipo_projetos';
+import { fetchLabs } from '../api/api_laboratorio';
 
-import './Projetos.css'; 
+import './Styles.css'; 
 
 interface TipoProjetos {
   [key: string]: string;

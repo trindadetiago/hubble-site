@@ -8,7 +8,7 @@ const HeroSection: React.FC = () => {
       <div className="container-left">
         <div className='hero-text'>
           <p>Bem vindo ao</p>
-          <h2>HUBBLE</h2>
+          <h2>Hubble</h2>
           <p>Explore os laboratórios e projetos do Centro de Informática da UFPB</p>
         </div>
       </div>

@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 
-import IndividualInstance from '../../components/shared/IndividualInstance/IndividualInstance';
-import EditModal from '../../components/shared/Modal/EditModal';
-import DeleteModal from '../../components/shared/Modal/DeleteModal';
-import CreateModal from '../../components/shared/Modal/CreateModal';
+import IndividualInstance from '../components/shared/IndividualInstance/IndividualInstance';
+import EditModal from '../components/shared/Modal/EditModal';
+import DeleteModal from '../components/shared/Modal/DeleteModal';
+import CreateModal from '../components/shared/Modal/CreateModal';
 
-import { fetchTipoProjetos, editTipoProjeto, createTipoProjeto, deleteTipoProjeto } from '../../api/api_tipo_projetos';
+import { fetchTipoProjetos, editTipoProjeto, createTipoProjeto, deleteTipoProjeto } from '../api/api_tipo_projetos';
 
-import './TipoProjetos.css'; 
+import './Styles.css'; 
 
 const TipoProjetos: React.FC = () => {
     const editInstanceClick = (Id: string, tipro_nome: string) => {

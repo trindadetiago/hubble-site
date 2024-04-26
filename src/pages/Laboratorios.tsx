@@ -1,19 +1,20 @@
 import React, { useState, useEffect } from 'react';
 
-import IndividualInstance from '../../components/shared/IndividualInstance/IndividualInstance';
-import EditModal from '../../components/shared/Modal/EditModal';
-import DeleteModal from '../../components/shared/Modal/DeleteModal';
-import CreateModal from '../../components/shared/Modal/CreateModal';
+import IndividualInstance from '../components/shared/IndividualInstance/IndividualInstance';
+import EditModal from '../components/shared/Modal/EditModal';
+import DeleteModal from '../components/shared/Modal/DeleteModal';
+import CreateModal from '../components/shared/Modal/CreateModal';
 
-import { fetchLabs, editLab, deleteLab, createLab } from '../../api/api_laboratorio';
+import { fetchLabs, editLab, deleteLab, createLab } from '../api/api_laboratorio';
 
-import './Laboratorios.css'; 
+import './Styles.css'; 
 
 const Laboratorios: React.FC = () => {
-    const editInstanceClick = (labId: string, labNome: string) => {
+    const editInstanceClick = (labId: string, labNome: string, descricao: string) => {
         setDataPlaceholders(
             { Id: { data_type: "string", value: labId, readOnly: true},
-            Nome: { data_type: "string", value: labNome, readOnly: false } 
+            Nome: { data_type: "string", value: labNome, readOnly: false },
+            Descricao: { data_type: "string", value: descricao, readOnly: false }  
         });
         setEditModalOpen(true);
     };
@@ -23,7 +24,7 @@ const Laboratorios: React.FC = () => {
         const jsonData = JSON.parse(dataa);
         console.log(jsonData)
         try {
-            await editLab(jsonData.Id.value, { name: jsonData.Nome.value });
+            await editLab(jsonData.Id.value, { name: jsonData.Nome.value, descricao: jsonData.Descricao.value });
             console.log("Sucesso")
             await fetchData();
         } catch (error) {
@@ -41,7 +42,7 @@ const Laboratorios: React.FC = () => {
         const jsonData = JSON.parse(dataa);
         console.log(jsonData)
         try {
-            await createLab({ name: jsonData.Nome.value });
+            await createLab({ name: jsonData.Nome.value, descricao: jsonData.Descricao.value });
             console.log("Sucesso")
             await fetchData();
         } catch (error) {
@@ -89,6 +90,7 @@ const Laboratorios: React.FC = () => {
     const [dataPlaceholders, setDataPlaceholders] = useState({
         Id: { data_type: "string", value: "", readOnly: true },
         Nome: { data_type: "string", value: "", readOnly: false},
+        Descricao: { data_type: "string", value: "", readOnly: false}
     });
 
     return (
@@ -114,8 +116,8 @@ const Laboratorios: React.FC = () => {
                 <IndividualInstance
                     key={lab.id}
                     title={lab.name}
-                    subtitle={"ID do Laboratório: " + lab.id}
-                    onEdit={() => editInstanceClick(lab.id, lab.name)}
+                    subtitle={lab.descricao}
+                    onEdit={() => editInstanceClick(lab.id, lab.name, lab.descricao)}
                     onDelete={() => deleteInstanceClick(lab.id)}
                 />
             ))}

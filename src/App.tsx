@@ -2,12 +2,12 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import LandingPage from './pages/LandingPage';
-import Laboratorios from './pages/Laboratorios/Laboratorios';
-import Projetos from './pages/Projetos/Projetos';
+import Laboratorios from './pages/Laboratorios';
+import Projetos from './pages/Projetos';
 import Pessoas from './pages/Pessoas';
 import Vinculos from './pages/Vinculos';
 import Sobre from './pages/Sobre';
-import TipoProjetos from './pages/TipoProjetos/TipoProjetos';
+import TipoProjetos from './pages/TipoProjetos';
 
 import Navbar from './components/shared/Navbar/Navbar';  
 

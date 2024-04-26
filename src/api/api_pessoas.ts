@@ -1,6 +1,6 @@
 import { url } from "./api";
 
-const api_url = url + "/tipoprojeto";
+const api_url = url + "/pessoa";
 
 // ROUTES:
 // /laboratorio
@@ -10,19 +10,23 @@ const api_url = url + "/tipoprojeto";
 // /curso
 // /tipo_projeto
 
-export const fetchTipoProjetos = async () => {
+export const fetchPessoas = async () => {
     try {
       const response = await fetch(api_url);
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
       const data = await response.json();
-      // data = {'tipoprojetos': [[id, tipro_nome], [id, tipro_nome]...]}
+      // data = {'pessoas': [[id, pess_nome, pess_email, id_curso_pessoa, pess_matricula, pess_role], [...], ...]
       console.log(data)
-      const transformedData = data.tipoprojetos.map((tipo_projeto: [string, string]) => {
+      const transformedData = data.pessoas.map((pessoa: [number, string, string, number, string, string]) => {
         return {
-          id: tipo_projeto[0],
-          tipro_nome: tipo_projeto[1]
+          id: pessoa[0],
+          pess_nome: pessoa[1],
+          pess_email: pessoa[2],
+          id_curso_pessoa: pessoa[3],
+          pess_matricula: pessoa[4],
+          pess_role: pessoa[5]
         };
       });
       return transformedData;
@@ -32,7 +36,7 @@ export const fetchTipoProjetos = async () => {
     }
 }
 
-export const deleteTipoProjeto = async (id: string): Promise<void> => {
+export const deletePessoa = async (id: string): Promise<void> => {
     try {
       const response = await fetch(`${api_url}/${id}`, {
         method: 'DELETE'
@@ -41,19 +45,19 @@ export const deleteTipoProjeto = async (id: string): Promise<void> => {
         throw new Error('Network response was not ok');
       }
     } catch (error) {
-      console.error('Failed to delete projeto:', error);
+      console.error('Failed to delete pessoa:', error);
       throw error;
     }
 }
   
-export const editTipoProjeto = async (id: string, tipoProjetoData: { tipro_nome: string }): Promise<void> => {
+export const editPessoa = async (id: string, pessoaData: { pess_nome: string, pessoa_email: string, id_curso_pessoa: string, pess_matricula: string, pess_role: string }): Promise<void> => {
     try {
       const response = await fetch(`${api_url}/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(tipoProjetoData)
+        body: JSON.stringify(pessoaData)
       });
       console.log("RESPONSE: ", response)
       if (!response.ok) {
@@ -65,17 +69,16 @@ export const editTipoProjeto = async (id: string, tipoProjetoData: { tipro_nome:
     }
 }
 
-export const createTipoProjeto = async ( tipoProjetoData: { tipro_nome: string } ): Promise<void> => { 
+export const createPessoa = async ( pessoaData: { pess_nome: string, pessoa_email: string, id_curso_pessoa: string, pess_matricula: string, pess_role: string } ): Promise<void> => { 
   try { 
     const response = await fetch(api_url, { 
       method: 'POST', headers: { 
         'Content-Type': 'application/json' 
       }, 
-      body: JSON.stringify(tipoProjetoData) 
+      body: JSON.stringify(pessoaData) 
     }); 
       if (!response.ok) { 
         console.log(response);
-        console.log(tipoProjetoData);
         throw new Error('Network response was not ok'); 
       } 
     } catch (error) { 
