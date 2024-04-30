@@ -82,8 +82,8 @@ const EditModal: React.FC<EditModalProps> = ({ data, isOpen, onClose, onConfirm 
         if (fields.hasOwnProperty('id_lab_projeto')) {
             fields['id_lab_projeto'].value = selectedLaboratorio;
         }
-        if (fields.hasOwnProperty('id_curso')) {
-            fields['id_curso'].value = selectedCurso;
+        if (fields.hasOwnProperty('IdCurso')) {
+            fields['IdCurso'].value = selectedCurso;
         }
         if (fields.hasOwnProperty('PessRole')) {
             fields['PessRole'].value = selectedRole;
