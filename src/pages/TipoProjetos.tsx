@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 import IndividualInstance from '../components/shared/IndividualInstance/IndividualInstance';
 import EditModal from '../components/shared/Modal/EditModal';
 import DeleteModal from '../components/shared/Modal/DeleteModal';
-import CreateModal from '../components/shared/Modal/CreateModal';
 
 import { fetchTipoProjetos, editTipoProjeto, createTipoProjeto, deleteTipoProjeto } from '../api/api_tipo_projetos';
 
@@ -127,7 +126,7 @@ const TipoProjetos: React.FC = () => {
             onClose={() => setDeleteModalOpen(false)}
             onConfirm={deleteInstanceConfirm}
             />
-            <CreateModal
+            <EditModal
             data = {dataPlaceholders}
             isOpen = {isCreateModalOpen}
             onClose={() => setCreateModalOpen(false)}

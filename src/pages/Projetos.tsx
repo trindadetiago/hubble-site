@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 import IndividualInstance from '../components/shared/IndividualInstance/IndividualInstance';
 import EditModal from '../components/shared/Modal/EditModal';
 import DeleteModal from '../components/shared/Modal/DeleteModal';
-import CreateModal from '../components/shared/Modal/CreateModal';
 
 import { fetchProjetos, editProjeto, deleteProjeto, createProjeto } from '../api/api_projetos';
 import { fetchTipoProjetos } from '../api/api_tipo_projetos';
@@ -183,7 +182,7 @@ const Projetos: React.FC = () => {
             onClose={() => setDeleteModalOpen(false)}
             onConfirm={deleteInstanceConfirm}
             />
-            <CreateModal
+            <EditModal
             data = {dataPlaceholders}
             isOpen = {isCreateModalOpen}
             onClose={() => setCreateModalOpen(false)}

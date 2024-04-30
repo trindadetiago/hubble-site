@@ -82,6 +82,6 @@ export const createPessoa = async ( pessoaData: { pess_nome: string, pessoa_emai
         throw new Error('Network response was not ok'); 
       } 
     } catch (error) { 
-      console.error('Failed to create projeto:', error); throw error; 
+      console.error('Failed to create pessoa:', error); throw error; 
     } 
   }

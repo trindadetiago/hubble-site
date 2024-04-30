@@ -21,10 +21,10 @@ function Dropdown<T extends { [key: string]: any }>({
 
     useEffect(() => {
         // Set the default selection based on defaultValue
-        if (defaultValue) {
+        if (defaultValue && !selectedId) {
             setSelectedId(defaultValue);
             onSelectionChange(defaultValue);
-        } else if (data.length > 0) {
+        } else if (!selectedId && data.length > 0) {
             setSelectedId(data[0][idKey]); // Fallback to the first item's id if no defaultValue
         }
     }, [data, idKey, defaultValue]);
@@ -33,6 +33,7 @@ function Dropdown<T extends { [key: string]: any }>({
         const id = event.target.value;
         setSelectedId(id);
         onSelectionChange(id);
+        console.log("Selected ID: ", id)
     };
 
     return (

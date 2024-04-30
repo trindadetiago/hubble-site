@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 import IndividualInstance from '../components/shared/IndividualInstance/IndividualInstance';
 import EditModal from '../components/shared/Modal/EditModal';
 import DeleteModal from '../components/shared/Modal/DeleteModal';
-import CreateModal from '../components/shared/Modal/CreateModal';
 
 import { fetchPessoas, editPessoa, createPessoa, deletePessoa } from '../api/api_pessoas';
 
@@ -15,9 +14,9 @@ const Pessoas: React.FC = () => {
             Id: { data_type: "string", value: Id, readOnly: true},
             PessNome: { data_type: "string", value: pess_nome, readOnly: false },
             PessEmail: { data_type: "string", value: pess_email, readOnly: false },
-            IdCurso: { data_type: "string", value: id_curso, readOnly: false },
+            IdCurso: { data_type: "id_curso", value: id_curso, readOnly: false },
             PessMatricula: { data_type: "string", value: pess_matricula, readOnly: false },
-            PessRole: { data_type: "string", value: pess_role, readOnly: false }
+            PessRole: { data_type: "role", value: pess_role, readOnly: false }
           });
         setEditModalOpen(true);
     };
@@ -35,7 +34,7 @@ const Pessoas: React.FC = () => {
             console.log("Sucesso")
             await fetchData();
         } catch (error) {
-            console.error('Error editing lab:', error);
+            console.error('Error editing pessoa:', error);
         }
         setEditModalOpen(false)
     };
@@ -54,7 +53,7 @@ const Pessoas: React.FC = () => {
             console.log("Sucesso")
             await fetchData();
         } catch (error) {
-            console.error('Error creating lab:', error);
+            console.error('Error creating pessoa:', error);
         }
     };
 
@@ -71,7 +70,7 @@ const Pessoas: React.FC = () => {
             await deletePessoa(deleteDataId);
             await fetchData();
         } catch (error) {
-            console.error('Error deleting lab:', error);
+            console.error('Error deleting pessoa:', error);
         }
         setDeleteModalOpen(false);
     }
@@ -83,7 +82,7 @@ const Pessoas: React.FC = () => {
             const data = await fetchPessoas();
             setPessData(data);
         } catch (error) {
-            console.error('Error fetching labs:', error);
+            console.error('Error fetching pessoas:', error);
         }
     };
     
@@ -99,9 +98,9 @@ const Pessoas: React.FC = () => {
         Id: { data_type: "string", value: "", readOnly: true },
         PessNome: { data_type: "string", value: "", readOnly: false },
         PessEmail: { data_type: "string", value: "", readOnly: false },
-        IdCurso: { data_type: "string", value: "", readOnly: false },
+        IdCurso: { data_type: "id_curso", value: "", readOnly: false },
         PessMatricula: { data_type: "string", value: "", readOnly: false },
-        PessRole: { data_type: "string", value: "", readOnly: false }
+        PessRole: { data_type: "role", value: "", readOnly: false }
       });
 
     return (
@@ -149,7 +148,7 @@ const Pessoas: React.FC = () => {
             onClose={() => setDeleteModalOpen(false)}
             onConfirm={deleteInstanceConfirm}
             />
-            <CreateModal
+            <EditModal
             data = {dataPlaceholders}
             isOpen = {isCreateModalOpen}
             onClose={() => setCreateModalOpen(false)}

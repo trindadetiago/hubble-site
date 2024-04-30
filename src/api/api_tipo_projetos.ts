@@ -17,9 +17,9 @@ export const fetchTipoProjetos = async () => {
         throw new Error('Network response was not ok');
       }
       const data = await response.json();
-      // data = {'tipoprojetos': [[id, tipro_nome], [id, tipro_nome]...]}
+      // data = {'tipos projetos': [[id, tipro_nome], [id, tipro_nome]...]}
       console.log(data)
-      const transformedData = data.tipoprojetos.map((tipo_projeto: [string, string]) => {
+      const transformedData = data['tipos projetos'].map((tipo_projeto: [string, string]) => {
         return {
           id: tipo_projeto[0],
           tipro_nome: tipo_projeto[1]

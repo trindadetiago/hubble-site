@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 import IndividualInstance from '../components/shared/IndividualInstance/IndividualInstance';
 import EditModal from '../components/shared/Modal/EditModal';
 import DeleteModal from '../components/shared/Modal/DeleteModal';
-import CreateModal from '../components/shared/Modal/CreateModal';
 
 import { fetchVinculos, editVinculo, deleteVinculo, createVinculo } from '../api/api_vinculos';
 
@@ -15,11 +14,11 @@ const Vinculos: React.FC = () => {
             Id: { data_type: "string", value: Id, readOnly: true},
             vinc_cargo: { data_type: "string", value: vinc_cargo, readOnly: false },
             vinc_carga_horaria: { data_type: "string", value: vinc_carga_horaria, readOnly: false },
-            vinc_remunerado: { data_type: "string", value: vinc_remunerado, readOnly: false },
+            vinc_remunerado: { data_type: "bool", value: vinc_remunerado, readOnly: false },
             vinc_data_inicio: { data_type: "data", value: vinc_data_inicio, readOnly: false },
             vinc_data_fim: { data_type: "data", value: vinc_data_fim, readOnly: false },
-            id_pessoa_vinculo: { data_type: "string", value: id_pessoa_vinculo, readOnly: false },
-            id_projeto_vinculo: { data_type: "string", value: id_projeto_vinculo, readOnly: false }
+            id_pessoa_vinculo: { data_type: "id_pessoa_vinculo", value: id_pessoa_vinculo, readOnly: false },
+            id_projeto_vinculo: { data_type: "id_projeto_vinculo", value: id_projeto_vinculo, readOnly: false }
         });
         setEditModalOpen(true);
     };
@@ -99,11 +98,11 @@ const Vinculos: React.FC = () => {
         Id: { data_type: "string", value: "", readOnly: true },
         vinc_cargo: { data_type: "string", value: "", readOnly: false },
         vinc_carga_horaria: { data_type: "string", value: "", readOnly: false },
-        vinc_remunerado: { data_type: "string", value: "", readOnly: false },
-        vinc_data_inicio: { data_type: "data", value: "", readOnly: false },
-        vinc_data_fim: { data_type: "data", value: "", readOnly: false },
-        id_pessoa_vinculo: { data_type: "string", value: "", readOnly: false },
-        id_projeto_vinculo: { data_type: "string", value: "", readOnly: false }
+        vinc_remunerado: { data_type: "bool", value: "", readOnly: false },
+        vinc_data_inicio: { data_type: "vinc_data_inicio", value: "", readOnly: false },
+        vinc_data_fim: { data_type: "vinc_data_fim", value: "", readOnly: false },
+        id_pessoa_vinculo: { data_type: "id_pessoa_vinculo", value: "", readOnly: false },
+        id_projeto_vinculo: { data_type: "id_projeto_vinculo", value: "", readOnly: false }
         });
 
     return (
@@ -151,7 +150,7 @@ const Vinculos: React.FC = () => {
             onClose={() => setDeleteModalOpen(false)}
             onConfirm={deleteInstanceConfirm}
             />
-            <CreateModal
+            <EditModal
             data = {dataPlaceholders}
             isOpen = {isCreateModalOpen}
             onClose={() => setCreateModalOpen(false)}
