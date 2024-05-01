@@ -19,7 +19,7 @@
 
 .input-field-filter {
     margin-bottom: 15px;
-    width: 48%;
+    width: 100%;
 }
 
 .label {
@@ -45,4 +45,15 @@
     justify-content: space-between;
     margin-bottom: 20px;
     flex-direction: row;
+}
+
+.filters-2 {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    flex-direction: column;
+}
+
+.filters-2 > div {
+    width: 100%;
 }

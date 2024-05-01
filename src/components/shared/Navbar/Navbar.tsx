@@ -5,10 +5,12 @@ import './Navbar.css'; // Import the CSS file
 const Navbar = () => {
   return (
     <nav className="navbar">
-      <div className="logo-container">
-        <img src="/logo192.png" alt="Logo" className="logo" />
-        <h1 className="logo-title">Hubble</h1>
-      </div>
+      <Link to="/">
+        <div className="logo-container">
+          <img src="/logo192.png" alt="Logo" className="logo" />
+          <h1 className="logo-title">Hubble</h1>
+        </div>
+      </Link>
       <div className="link-container">
         <Link to="/" className="link">Ínicio</Link>
         <Link to="/Laboratorios" className="link">Laboratórios</Link>

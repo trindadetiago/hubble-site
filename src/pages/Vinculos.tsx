@@ -129,15 +129,10 @@ const Vinculos: React.FC = () => {
         });
 
     const [laboratoriosData, setLaboratoriosData] = useState<Laboratorios>({}); // [ { id: 1, name: "Laboratorio 1" }, { id: 2, name: "Laboratorio 2" }, ... ]
-    const [laboratoriosPlainData, setLaboratoriosPlainData] = useState([]); // [ { id: 1, name: "Laboratorio 1" }, { id: 2, name: "Laboratorio 2" }, ...
     
     const fecthDataLaboratorios = async () => {
         try {
             const data = await fetchLabs();
-            let plain_data = data 
-            plain_data.unshift({ id: "Nenhum", name: "Todos" });
-            setLaboratoriosPlainData(plain_data);
-            console.log(plain_data)
             const transformedData: { [key: string]: string } = data.reduce((acc: { [key: string]: string }, cur: { [key: string]: string }) => {
                 acc[cur.id.toString()] = cur.name;
                 return acc;
@@ -152,11 +147,12 @@ const Vinculos: React.FC = () => {
     const [projetosPlainData, setProjetosPlainData] = useState([]); // [ { id: 1, name: "Projeto 1" }, { id: 2, name: "Projeto 2" }, ...
 
     const fecthDataProjetos = async () => {
-        let lab = selectedLaboratorioFilter === "Nenhum" ? "" : selectedLaboratorioFilter;
-        
         try {
-            const data = await fetchProjetos(lab, "", "");
+            const data = await fetchProjetos("", "", "");
             let plain_data = data 
+            plain_data = plain_data.map((item: any) => {
+                return { ...item, proj_nome:  laboratoriosData[item.id_lab_projeto] + " - " + item.proj_nome };
+            });
             plain_data.unshift({ id: "Nenhum", proj_nome: "Sem Filtro" });
             setProjetosPlainData(plain_data);
             console.log(plain_data)
@@ -185,7 +181,6 @@ const Vinculos: React.FC = () => {
         }
     }
 
-    const [selectedLaboratorioFilter, setSelectedLaboratorioFilter] = useState(""); // "" or id
     const [selectedProjetoFilter, setSelectedProjetoFilter] = useState(""); // "" or id
 
     useEffect(() => {
@@ -193,7 +188,7 @@ const Vinculos: React.FC = () => {
         fecthDataLaboratorios();
         fecthDataProjetos();
         fetchDataPessoas();
-    }, [selectedLaboratorioFilter, selectedProjetoFilter]);
+    }, [selectedProjetoFilter]);
 
     const [showSuccess, setShowSuccess] = useState(false);
     const [showError, setShowError] = useState(false);
@@ -217,18 +212,7 @@ const Vinculos: React.FC = () => {
             Vínculos
             </h1>
 
-            <div className="filters">
-                <div key="filter-1" className="input-field-filter">
-                    <label className="label">Selecionar laboratório</label>
-                    <Dropdown 
-                        key="filter1"
-                        data={laboratoriosPlainData} 
-                        idKey="id" 
-                        displayKey="name" 
-                        onSelectionChange={setSelectedLaboratorioFilter} 
-                        defaultValue={"Nenhum"}
-                    />
-                </div>
+            <div className="filters-2">
                 <div key="filter-2" className="input-field-filter">
                     <label className="label">Filtro por projeto</label>
                     <Dropdown 
