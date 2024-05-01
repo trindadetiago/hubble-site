@@ -21,10 +21,11 @@ interface Laboratorios {
 }
 
 const Projetos: React.FC = () => {
-    const editInstanceClick = (Id: string, proj_nome: string, id_tipro_projeto: string, id_lab_projeto: string) => {
+    const editInstanceClick = (Id: string, proj_nome: string, proj_descricao: string, id_tipro_projeto: string, id_lab_projeto: string) => {
         setDataPlaceholders({ 
             Id: { data_type: "string", value: Id, readOnly: true},
             proj_nome: { data_type: "string", value: proj_nome, readOnly: false },
+            proj_descricao: { data_type: "string", value: proj_descricao, readOnly: false },
             id_tipro_projeto: { data_type: "id_tipro_projeto", value: id_tipro_projeto, readOnly: false },
             id_lab_projeto: { data_type: "id_lab_projeto", value: id_lab_projeto, readOnly: false } 
         });
@@ -35,7 +36,7 @@ const Projetos: React.FC = () => {
         console.log(dataa)
         let jsonData = JSON.parse(dataa);
         const id = jsonData.Id.value;
-        jsonData = {proj_nome: jsonData.proj_nome.value, id_tipro_projeto: jsonData.id_tipro_projeto.value, id_lab_projeto: jsonData.id_lab_projeto.value}
+        jsonData = {proj_nome: jsonData.proj_nome.value,  proj_descricao: jsonData.proj_descricao.value, id_tipro_projeto: jsonData.id_tipro_projeto.value, id_lab_projeto: jsonData.id_lab_projeto.value}
         console.log(jsonData)
         try {
             await editProjeto(id, jsonData);
@@ -56,7 +57,7 @@ const Projetos: React.FC = () => {
     const createInstanceConfirm = async (dataa: string) => {
         console.log(dataa)
         let jsonData = JSON.parse(dataa);
-        jsonData = {proj_nome: jsonData.proj_nome.value, id_tipro_projeto: jsonData.id_tipro_projeto.value, id_lab_projeto: jsonData.id_lab_projeto.value}
+        jsonData = {proj_nome: jsonData.proj_nome.value, proj_descricao: jsonData.proj_descricao.value, id_tipro_projeto: jsonData.id_tipro_projeto.value, id_lab_projeto: jsonData.id_lab_projeto.value}
         console.log(jsonData)
         try {
             await createProjeto(jsonData);
@@ -145,6 +146,7 @@ const Projetos: React.FC = () => {
     const [dataPlaceholders, setDataPlaceholders] = useState({
         Id: { data_type: "string", value: "", readOnly: true },
         proj_nome: { data_type: "string", value: "", readOnly: false },
+        proj_descricao: { data_type: "string", value: "", readOnly: false },
         id_tipro_projeto: { data_type: "id_tipro_projeto", value: "", readOnly: false },
         id_lab_projeto: { data_type: "id_lab_projeto", value: "", readOnly: false } 
     });
@@ -154,6 +156,7 @@ const Projetos: React.FC = () => {
     useEffect(() => {
         fetchData();
         fecthDataLaboratorios();
+        fecthDataTipoProjetos();
     }, [selectedLaboratorioFilter]);
 
     const [showSuccess, setShowSuccess] = useState(false);
@@ -210,7 +213,7 @@ const Projetos: React.FC = () => {
                     key={proj.id}
                     title={proj.proj_nome}
                     subtitle={"Projeto de " + tipoProjetosData[proj.id_tipro_projeto] + " do Laboratório " + laboratoriosData[proj.id_lab_projeto]}
-                    onEdit={() => editInstanceClick(proj.id, proj.proj_nome, proj.id_tipro_projeto, proj.id_lab_projeto)}
+                    onEdit={() => editInstanceClick(proj.id, proj.proj_nome, proj.proj_descricao, proj.id_tipro_projeto, proj.id_lab_projeto)}
                     onDelete={() => deleteInstanceClick(proj.id)}
                 />
             ))}
@@ -236,6 +239,7 @@ const Projetos: React.FC = () => {
             data = {{
                 Id: { data_type: "string", value: "", readOnly: true },
                 proj_nome: { data_type: "string", value: "", readOnly: false },
+                proj_descricao: { data_type: "string", value: "", readOnly: false },
                 id_tipro_projeto: { data_type: "id_tipro_projeto", value: "", readOnly: false },
                 id_lab_projeto: { data_type: "id_lab_projeto", value: "", readOnly: false } 
             }}

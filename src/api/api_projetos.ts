@@ -33,12 +33,13 @@ export const fetchProjetos = async (id_lab: string, id_tipro_projeto: string, id
         return [];
       } 
       // data = {'projetos': [[id, proj_nome, id_tipro_projeto, id_lab_projeto], [id, proj_nome, id_tipro_projeto, id_lab_projeto], ...]}
-      const transformedData = data.projetos.map((proj: [number, string, number, number]) => {
+      const transformedData = data.projetos.map((proj: [number, string, string, string, number]) => {
         return {
           id: proj[0],
           proj_nome: proj[1],
-          id_tipro_projeto: proj[2],
-          id_lab_projeto: proj[3]
+          proj_descricao: proj[2],
+          id_tipro_projeto: proj[3],
+          id_lab_projeto: proj[4]
         };
       });
       return transformedData;
@@ -62,7 +63,7 @@ export const deleteProjeto = async (id: string): Promise<void> => {
     }
 }
   
-export const editProjeto = async (id: string, projetoData: { proj_nome: string, id_tipro_projeto: string, id_lab_projeto: string }): Promise<void> => {
+export const editProjeto = async (id: string, projetoData: { proj_nome: string, proj_descricao: string, id_tipro_projeto: string, id_lab_projeto: string }): Promise<void> => {
     try {
       const response = await fetch(`${api_url}/${id}`, {
         method: 'PUT',
@@ -81,7 +82,7 @@ export const editProjeto = async (id: string, projetoData: { proj_nome: string, 
     }
 }
 
-export const createProjeto = async ( projetoData: { proj_nome: string, id_tipro_projeto: string, id_lab_projeto: string } ): Promise<void> => { 
+export const createProjeto = async ( projetoData: { proj_nome: string, proj_descricao: string, id_tipro_projeto: string, id_lab_projeto: string } ): Promise<void> => { 
   try { 
     const response = await fetch(api_url, { 
       method: 'POST', headers: { 

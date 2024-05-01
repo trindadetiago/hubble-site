@@ -47,6 +47,7 @@ const Laboratorios: React.FC = () => {
             await createLab({ name: jsonData.Nome.value, descricao: jsonData.Descricao.value });
             console.log("Sucesso")
             handleSuccess("Laboratório Criado com Sucesso!");
+            setCreateModalOpen(false);
             await fetchData();
         } catch (error) {
             handleError("Erro ao criar laboratório!");
