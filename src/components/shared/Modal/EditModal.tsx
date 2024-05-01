@@ -113,6 +113,9 @@ const EditModal: React.FC<EditModalProps> = ({ data, isOpen, onClose, onConfirm,
             if (fieldName === "Id") {
                 return true; // Skip the comparison for the "Id" field
             }
+            if (fieldName === "vinc_data_fim") {
+                return true; // Skip the comparison for the "data_fim" field
+            }
             return field.value !== '';
         });
         if (!areAllFieldsNotEmpty) {
