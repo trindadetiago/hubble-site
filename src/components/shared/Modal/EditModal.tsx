@@ -51,6 +51,7 @@ const labels: LabelKeys = {
     "vinc_data_fim": "Data de Fim",
     "id_pessoa_vinculo": "Pessoa",
     "id_projeto_vinculo": "Projeto",
+    "proj_descricao": "Descrição do Projeto",
 };
 
 const EditModal: React.FC<EditModalProps> = ({ data, isOpen, onClose, onConfirm, title }) => {
