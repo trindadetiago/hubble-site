@@ -244,7 +244,7 @@ const Vinculos: React.FC = () => {
                 <IndividualInstance
                     key={vinc.id}
                     title={pessoasData[vinc.id_pessoa_vinculo] + " para o cargo '" + vinc.vinc_cargo + "'"}
-                    subtitle={"Carga horária: " + vinc.vinc_carga_horaria + " horas, " + (vinc.vinc_remunerado === 'true' ? 'Remunerado' : 'Não Remunerado') + ", Projeto: " + projetosData[vinc.id_projeto_vinculo]}
+                    subtitle={"Carga horária: " + vinc.vinc_carga_horaria + " horas, " + (vinc.vinc_remunerado ? 'Remunerado' : 'Não Remunerado') + ", Projeto: " + projetosData[vinc.id_projeto_vinculo]}
                     onEdit={() => editInstanceClick(vinc.id, vinc.vinc_cargo, vinc.vinc_carga_horaria, vinc.vinc_remunerado, vinc.vinc_data_inicio, vinc.vinc_data_fim, vinc.id_pessoa_vinculo, vinc.id_projeto_vinculo)}
                     onDelete={() => deleteInstanceClick(vinc.id)}
                 />

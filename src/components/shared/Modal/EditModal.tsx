@@ -99,7 +99,6 @@ const EditModal: React.FC<EditModalProps> = ({ data, isOpen, onClose, onConfirm,
         }
         if (fields.hasOwnProperty('vinc_remunerado')) {
             fields['vinc_remunerado'].value = selectedVincRemunerado;
-            fields['vinc_remunerado'].value = fields['vinc_remunerado'].value === 'Sim' ? 'true' : 'false'
         }
         if (fields.hasOwnProperty('vinc_data_inicio')) {
             fields['vinc_data_inicio'].value = selectedDataInicio;
@@ -313,7 +312,7 @@ const EditModal: React.FC<EditModalProps> = ({ data, isOpen, onClose, onConfirm,
                                     idKey="ids" 
                                     displayKey="name" 
                                     onSelectionChange={setSelectedVincRemunerado} 
-                                    defaultValue={fields[key].value === 'true' ? 'Sim' : 'Não'}
+                                    defaultValue={fields[key].value}
                                 />
                             </div>
                         );
