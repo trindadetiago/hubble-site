@@ -129,12 +129,9 @@ const Projetos: React.FC = () => {
     const [projData, setProjData] = useState([]);
 
     const fetchData = async () => {
-        let tipo = selectedTipoProjetoFilter === "Nenhum" ? "" : selectedTipoProjetoFilter;
         let lab = selectedLaboratorioFilter === "Nenhum" ? "" : selectedLaboratorioFilter;
-        console.log(tipo, lab)
-        console.log("Fetching data")
         try {
-            const data = await fetchProjetos(lab, tipo, "");
+            const data = await fetchProjetos(lab, "", "");
             setProjData(data);
         } catch (error) {
             console.error('Error fetching labs:', error);
@@ -152,14 +149,12 @@ const Projetos: React.FC = () => {
         id_lab_projeto: { data_type: "id_lab_projeto", value: "", readOnly: false } 
     });
 
-    const [selectedTipoProjetoFilter, setSelectedTipoProjetoFilter] = useState(""); // "" or id
     const [selectedLaboratorioFilter, setSelectedLaboratorioFilter] = useState(""); // "" or id
 
     useEffect(() => {
         fetchData();
-        fecthDataTipoProjetos();
         fecthDataLaboratorios();
-    }, [selectedTipoProjetoFilter, selectedLaboratorioFilter]);
+    }, [selectedLaboratorioFilter]);
 
     const [showSuccess, setShowSuccess] = useState(false);
     const [showError, setShowError] = useState(false);
@@ -184,17 +179,6 @@ const Projetos: React.FC = () => {
             </h1>
 
             <div className="filters">
-                <div key="filter-1" className="input-field-filter">
-                    <label className="label">Filtro por tipo</label>
-                    <Dropdown 
-                        key = "filter1"
-                        data={tipoProjetosPlainData} 
-                        idKey="id" 
-                        displayKey="tipro_nome" 
-                        onSelectionChange={setSelectedTipoProjetoFilter} 
-                        defaultValue={"Nenhum"}
-                    />
-                </div>
                 <div key="filter-2" className="input-field-filter">
                     <label className="label">Filtro por laboratório</label>
                     <Dropdown 
