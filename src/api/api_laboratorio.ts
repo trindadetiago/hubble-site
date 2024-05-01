@@ -17,6 +17,11 @@ export const fetchLabs = async () => {
         throw new Error('Network response was not ok');
       }
       const data = await response.json();
+
+      if (data.hasOwnProperty('message')) {
+        return [];
+      } 
+
       const transformedData = data.laboratorios.map((lab: [number, string, string]) => {
         return {
           id: lab[0],

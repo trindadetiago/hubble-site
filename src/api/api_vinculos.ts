@@ -10,13 +10,23 @@ const api_url = url + "/vinculo";
 // /curso
 // /tipo_projeto
 
-export const fetchVinculos = async () => {
-    try {
-      const response = await fetch(api_url);
+export const fetchVinculos = async (id_proj: string) => {
+  let api_url_new = api_url;
+  if (id_proj !== "") {
+    api_url_new = api_url_new + `?id_projeto_vinculo=${id_proj}`;
+  }  
+  console.log("API_URL_NEW VINCULOS: ", api_url_new);
+  try {
+      const response = await fetch(api_url_new);
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
       const data = await response.json();
+
+      if (data.hasOwnProperty('message')) {
+        return [];
+      } 
+
       // data = {'vinculos': [[id, vinc_cargo, vinc_carga_horaria, vinc_remunerado, vinc_data_inicio, vinc_data_fim, id_pessoa_vinculo, id_projeto_vinculo], [id, vinc_cargo, vinc_carga_horaria, vinc_remunerado, vinc_data_inicio, vinc_data_fim, id_pessoa_vinculo, id_projeto_vinculo], ...]}
       const transformedData = data.vinculos.map((vinculo: [string, string, number, boolean, string, string, string, string]) => {
         return {

@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import IndividualInstance from '../components/shared/IndividualInstance/IndividualInstance';
 import EditModal from '../components/shared/Modal/EditModal';
 import DeleteModal from '../components/shared/Modal/DeleteModal';
+import Popup from '../components/shared/Modal/Popup';
 
 import { fetchLabs, editLab, deleteLab, createLab } from '../api/api_laboratorio';
 
@@ -26,8 +27,10 @@ const Laboratorios: React.FC = () => {
             await editLab(jsonData.Id.value, { name: jsonData.Nome.value, descricao: jsonData.Descricao.value });
             console.log("Sucesso")
             await fetchData();
+            handleSuccess("Laboratório Editado com Sucesso!");
         } catch (error) {
             console.error('Error editing lab:', error);
+            handleError("Erro ao editar laboratório!");
         }
         setEditModalOpen(false)
     };
@@ -43,8 +46,10 @@ const Laboratorios: React.FC = () => {
         try {
             await createLab({ name: jsonData.Nome.value, descricao: jsonData.Descricao.value });
             console.log("Sucesso")
+            handleSuccess("Laboratório Criado com Sucesso!");
             await fetchData();
         } catch (error) {
+            handleError("Erro ao criar laboratório!");
             console.error('Error creating lab:', error);
         }
     };
@@ -61,8 +66,10 @@ const Laboratorios: React.FC = () => {
         try {
             await deleteLab(deleteDataId);
             await fetchData();
+            handleSuccess("Laboratório Deletado com Sucesso!");
         } catch (error) {
             console.error('Error deleting lab:', error);
+            handleError("Erro ao deletar laboratório!");
         }
         setDeleteModalOpen(false);
     }
@@ -91,6 +98,21 @@ const Laboratorios: React.FC = () => {
         Nome: { data_type: "string", value: "", readOnly: false},
         Descricao: { data_type: "string", value: "", readOnly: false}
     });
+
+    const [showSuccess, setShowSuccess] = useState(false);
+    const [showError, setShowError] = useState(false);
+    const [successMessage, setSuccessMessage] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
+
+    const handleSuccess = (message: string) => {
+        setSuccessMessage(message);
+        setShowSuccess(true);
+    };
+
+    const handleError = (message: string) => {
+        setErrorMessage(message);
+        setShowError(true);
+    };
 
     return (
         <div style={{ paddingLeft: '15%', paddingRight: '15%'}}>
@@ -131,6 +153,7 @@ const Laboratorios: React.FC = () => {
             isOpen = {isEditModalOpen}
             onClose={() => setEditModalOpen(false)}
             onConfirm={editInstanceConfirm}
+            title="Editar Laboratório"
             />
             <DeleteModal
             isOpen = {isDeleteModalOpen}
@@ -138,11 +161,19 @@ const Laboratorios: React.FC = () => {
             onConfirm={deleteInstanceConfirm}
             />
             <EditModal
-            data = {dataPlaceholders}
+            data = {{
+                Id: { data_type: "string", value: "", readOnly: true },
+                Nome: { data_type: "string", value: "", readOnly: false},
+                Descricao: { data_type: "string", value: "", readOnly: false}
+            }}
             isOpen = {isCreateModalOpen}
             onClose={() => setCreateModalOpen(false)}
             onConfirm={createInstanceConfirm}
+            title="Criar Laboratório"
             />
+            <Popup message={successMessage} type="positive" show={showSuccess} />
+            <Popup message={errorMessage} type="negative" show={showError} />
+        
         </div>
     );
 };

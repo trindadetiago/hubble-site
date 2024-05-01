@@ -26,6 +26,7 @@ function Dropdown<T extends { [key: string]: any }>({
             onSelectionChange(defaultValue);
         } else if (!selectedId && data.length > 0) {
             setSelectedId(data[0][idKey]); // Fallback to the first item's id if no defaultValue
+            onSelectionChange(data[0][idKey]);
         }
     }, [data, idKey, defaultValue]);
 

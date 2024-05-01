@@ -18,7 +18,10 @@ export const fetchTipoProjetos = async () => {
       }
       const data = await response.json();
       // data = {'tipos projetos': [[id, tipro_nome], [id, tipro_nome]...]}
-      console.log(data)
+      if (data.hasOwnProperty('message')) {
+        return [];
+      } 
+
       const transformedData = data['tipos projetos'].map((tipo_projeto: [string, string]) => {
         return {
           id: tipo_projeto[0],

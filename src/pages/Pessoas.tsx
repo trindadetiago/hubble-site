@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import IndividualInstance from '../components/shared/IndividualInstance/IndividualInstance';
 import EditModal from '../components/shared/Modal/EditModal';
 import DeleteModal from '../components/shared/Modal/DeleteModal';
+import Popup from '../components/shared/Modal/Popup';
 
 import { fetchPessoas, editPessoa, createPessoa, deletePessoa } from '../api/api_pessoas';
 
@@ -33,10 +34,12 @@ const Pessoas: React.FC = () => {
             await editPessoa(id, jsonData);
             console.log("Sucesso")
             await fetchData();
+            setEditModalOpen(false)
+            handleSuccess("Pessoa Editada com Sucesso!");
         } catch (error) {
             console.error('Error editing pessoa:', error);
+            handleError("Erro ao editar pessoa!");
         }
-        setEditModalOpen(false)
     };
 
     const createInstanceClick = () => {
@@ -52,8 +55,11 @@ const Pessoas: React.FC = () => {
             await createPessoa(jsonData);
             console.log("Sucesso")
             await fetchData();
+            setCreateModalOpen(false)
+            handleSuccess("Pessoa Criada com Sucesso!");
         } catch (error) {
             console.error('Error creating pessoa:', error);
+            handleError("Erro ao criar pessoa!");
         }
     };
 
@@ -69,10 +75,12 @@ const Pessoas: React.FC = () => {
         try {
             await deletePessoa(deleteDataId);
             await fetchData();
+            setDeleteModalOpen(false);
+            handleSuccess("Pessoa Deletada com Sucesso!");
         } catch (error) {
             console.error('Error deleting pessoa:', error);
+            handleError("Erro ao deletar pessoa!");
         }
-        setDeleteModalOpen(false);
     }
 
     const [pessData, setPessData] = useState([]);
@@ -102,6 +110,21 @@ const Pessoas: React.FC = () => {
         PessMatricula: { data_type: "string", value: "", readOnly: false },
         PessRole: { data_type: "role", value: "", readOnly: false }
       });
+
+    const [showSuccess, setShowSuccess] = useState(false);
+    const [showError, setShowError] = useState(false);
+    const [successMessage, setSuccessMessage] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
+
+    const handleSuccess = (message: string) => {
+        setSuccessMessage(message);
+        setShowSuccess(true);
+    };
+
+    const handleError = (message: string) => {
+        setErrorMessage(message);
+        setShowError(true);
+    };
 
     return (
         <div style={{ paddingLeft: '15%', paddingRight: '15%'}}>
@@ -142,6 +165,7 @@ const Pessoas: React.FC = () => {
             isOpen = {isEditModalOpen}
             onClose={() => setEditModalOpen(false)}
             onConfirm={editInstanceConfirm}
+            title="Editar Pessoa"
             />
             <DeleteModal
             isOpen = {isDeleteModalOpen}
@@ -149,11 +173,21 @@ const Pessoas: React.FC = () => {
             onConfirm={deleteInstanceConfirm}
             />
             <EditModal
-            data = {dataPlaceholders}
+            data = {{
+                Id: { data_type: "string", value: "", readOnly: true },
+                PessNome: { data_type: "string", value: "", readOnly: false },
+                PessEmail: { data_type: "string", value: "", readOnly: false },
+                IdCurso: { data_type: "id_curso", value: "", readOnly: false },
+                PessMatricula: { data_type: "string", value: "", readOnly: false },
+                PessRole: { data_type: "role", value: "", readOnly: false }
+              }}
             isOpen = {isCreateModalOpen}
             onClose={() => setCreateModalOpen(false)}
             onConfirm={createInstanceConfirm}
+            title="Adicionar Pessoa"
             />
+            <Popup message={successMessage} type="positive" show={showSuccess} />
+            <Popup message={errorMessage} type="negative" show={showError} />
         </div>
     );
 };

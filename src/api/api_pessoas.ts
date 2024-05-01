@@ -18,7 +18,10 @@ export const fetchPessoas = async () => {
       }
       const data = await response.json();
       // data = {'pessoas': [[id, pess_nome, pess_email, id_curso_pessoa, pess_matricula, pess_role], [...], ...]
-      console.log(data)
+      if (data.hasOwnProperty('message')) {
+        return [];
+      } 
+
       const transformedData = data.pessoas.map((pessoa: [number, string, string, number, string, string]) => {
         return {
           id: pessoa[0],

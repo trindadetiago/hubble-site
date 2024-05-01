@@ -3,6 +3,7 @@ import './Modal.css';
 
 import Dropdown from './Dropdown';
 import DateInput from './DateInput';
+import Popup from './Popup';
 
 import { fetchTipoProjetos } from '../../../api/api_tipo_projetos';
 import { fetchLabs } from '../../../api/api_laboratorio';
@@ -15,6 +16,7 @@ interface EditModalProps {
     isOpen: boolean;
     onClose: () => void;
     onConfirm: (data: string) => void;
+    title: string
 }
 
 interface Field {
@@ -51,7 +53,7 @@ const labels: LabelKeys = {
     "id_projeto_vinculo": "Projeto",
 };
 
-const EditModal: React.FC<EditModalProps> = ({ data, isOpen, onClose, onConfirm }) => {
+const EditModal: React.FC<EditModalProps> = ({ data, isOpen, onClose, onConfirm, title }) => {
     const [selectedTipoProjeto, setSelectedTipoProjeto] = useState('');
     const [selectedLaboratorio, setSelectedLaboratorio] = useState('');
     const [selectedCurso, setSelectedCurso] = useState('');
@@ -105,6 +107,18 @@ const EditModal: React.FC<EditModalProps> = ({ data, isOpen, onClose, onConfirm 
             fields['vinc_data_fim'].value = selectedDataFim;
         }
         const updatedFields = JSON.stringify(fields);
+
+        const areAllFieldsNotEmpty = Object.entries(fields).every(([fieldName, field]) => {
+            if (fieldName === "Id") {
+                return true; // Skip the comparison for the "Id" field
+            }
+            return field.value !== '';
+        });
+        if (!areAllFieldsNotEmpty) {
+            console.log('All fields must be filled', fields);
+            handleError('Todos os campos devem ser preenchidos!');
+            return;
+        }
         console.log("SENDING", updatedFields)
         onConfirm(updatedFields);
     }
@@ -155,13 +169,21 @@ const EditModal: React.FC<EditModalProps> = ({ data, isOpen, onClose, onConfirm 
     const [projetosData, setProjetosData] = useState([]); // [ { id: 1, name: "Projeto 1" }, { id: 2, name: "Projeto 2" }, ... ]
     const fecthDataProjetos = async () => {
         try {
-            const data = await fetchProjetos();
+            const data = await fetchProjetos("", "", "");
             console.log(data);
             setProjetosData(data);
         } catch (error) {
             console.error('Error fetching data:', error);
         }
     }
+
+    const [showError, setShowError] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
+
+    const handleError = (message: string) => {
+        setErrorMessage(message);
+        setShowError(true);
+    };
 
     useEffect(() => {
         if (isOpen) {
@@ -178,7 +200,7 @@ const EditModal: React.FC<EditModalProps> = ({ data, isOpen, onClose, onConfirm 
     return (
         <div className="modal-overlay">
             <div className="modal-content">
-                <div className="modal-header">Editar</div>
+                <div className="modal-header">{title}</div>
                 {Object.keys(fields).map((key) => {
                     if (fields[key].data_type === "id_tipro_projeto") {
                         const label = labels[key as keyof LabelKeys];
@@ -337,6 +359,8 @@ const EditModal: React.FC<EditModalProps> = ({ data, isOpen, onClose, onConfirm 
                     <button className="modal-button modal-confirm-edit-button" onClick={handleConfirm}>Confirmar</button>
                 </div>
             </div>
+            <Popup message={errorMessage} type="negative" show={showError} />
+        
         </div>
     );
 };

@@ -10,13 +10,28 @@ const api_url = url + "/projeto";
 // /curso
 // /tipo_projeto
 
-export const fetchProjetos = async () => {
+export const fetchProjetos = async (id_lab: string, id_tipro_projeto: string, id_projeto: string) => {
+    let api_url_new = api_url;
+    if (id_lab !== "") {
+      api_url_new = api_url_new + `?id_lab_projeto=${id_lab}`;
+    }
+    if (id_tipro_projeto !== "") {
+      api_url_new = api_url_new + `?id_tipro_projeto=${id_tipro_projeto}`;
+    }
+    if (id_projeto !== "") {
+      api_url_new = api_url_new + `?id_projeto=${id_projeto}`;
+    }
+    console.log("API_URL_NEW: ", api_url_new);
     try {
-      const response = await fetch(api_url);
+      const response = await fetch(api_url_new);
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
       const data = await response.json();
+
+      if (data.hasOwnProperty('message')) {
+        return [];
+      } 
       // data = {'projetos': [[id, proj_nome, id_tipro_projeto, id_lab_projeto], [id, proj_nome, id_tipro_projeto, id_lab_projeto], ...]}
       const transformedData = data.projetos.map((proj: [number, string, number, number]) => {
         return {

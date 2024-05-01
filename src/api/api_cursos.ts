@@ -17,6 +17,11 @@ export const fetchCursos = async () => {
         throw new Error('Network response was not ok');
       }
       const data = await response.json();
+
+      if (data.hasOwnProperty('message')) {
+        return [];
+      } 
+
       const transformedData = data.cursos.map((lab: [string, string, string]) => {
         return {
           id: lab[0],
