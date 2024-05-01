@@ -8,21 +8,21 @@ interface LabView {
     lab_descricao: string;
     quantidade_pessoas: number;
     quantidade_projetos: number;
-  }
+}
   
-  interface ProjView {
+interface ProjView {
     proj_id: string;
     proj_nome: string;
     proj_descricao: string;
     tipo_proj: string;
     lab_nome: string;
     quantidade_pessoas: number;
-  }
+}
   
-  interface ViewsData {
+interface ViewsData {
     view_laboratorio: LabView[];
     view_projeto: ProjView[];
-  }
+}
 
 export const fetchViews = async (): Promise<ViewsData> => {
     try {
