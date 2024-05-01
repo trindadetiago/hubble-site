@@ -16,9 +16,8 @@ const IndividualLab: React.FC<IndividualLabProps> = ({
     return (
         <div className='LabContainer'>
             <h2>{lab_nome}</h2>
-            <h3>{lab_descricao}</h3>
             <p>Número de membros: {quantidade_pessoas}</p>
-            <p>Número de projetos: {quantidade_projetos}</p>
+            <p>Número de projetos: {lab_descricao}</p>
         </div>
     );
 };

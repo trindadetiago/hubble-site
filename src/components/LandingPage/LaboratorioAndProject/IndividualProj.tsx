@@ -24,6 +24,7 @@ const IndividualProj: React.FC<IndividualProjProps> = ({
                 <div className='ProjDividerLeft'>
                     <h3>{proj_descricao}</h3>
                 </div>
+                
                 <div className='ProjDividerRight'>
                     <p>Tipo Projeto: {tipo_proj}</p>
                     <p>Laboratório: {lab_nome}</p>

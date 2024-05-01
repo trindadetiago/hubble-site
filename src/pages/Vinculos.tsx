@@ -65,6 +65,7 @@ const Vinculos: React.FC = () => {
     const createInstanceConfirm = async (dataa: string) => {
         console.log(dataa)
         let jsonData = JSON.parse(dataa);
+        console.log(jsonData.vinc_remunerado.value)
         jsonData = {vinc_cargo: jsonData.vinc_cargo.value, vinc_carga_horaria: jsonData.vinc_carga_horaria.value, vinc_remunerado: jsonData.vinc_remunerado.value, vinc_data_inicio: jsonData.vinc_data_inicio.value, vinc_data_fim: jsonData.vinc_data_fim.value, id_pessoa_vinculo: jsonData.id_pessoa_vinculo.value, id_projeto_vinculo: jsonData.id_projeto_vinculo.value}
         console.log(jsonData)
         try {
