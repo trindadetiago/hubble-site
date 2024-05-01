@@ -29,8 +29,10 @@ const TipoProjetos: React.FC = () => {
             console.log("Sucesso")
             await fetchData();
             setEditModalOpen(false);
+            handleSuccess("Tipo de Projeto editado com sucesso!");
         } catch (error) {
             console.error('Error editing lab:', error);
+            handleError("Erro ao editar Tipo de Projeto!");
         }
     };
 
@@ -81,10 +83,8 @@ const TipoProjetos: React.FC = () => {
         try {
             const data = await fetchTipoProjetos();
             setTipoProjData(data);
-            handleSuccess("Tipos de Projetos atualizados!");
         } catch (error) {
             console.error('Error fetching labs:', error);
-            handleError("Erro ao atualizar Tipos de Projetos!");
         }
     };
     
